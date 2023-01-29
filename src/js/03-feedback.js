@@ -5,7 +5,7 @@ const inputEmailEl = document.querySelector('[name="email"]');
 const textAreaEl = document.querySelector('[name="message"]');
 
 const STORAGE_KEY = "feedback-form-state";
-const DataForm = {};
+const dataForm = {};
 
 onDataPlaceholder()
 
@@ -13,9 +13,9 @@ feedbackFormEl.addEventListener('input', throttle(onDataForm, 500))
 feedbackFormEl.addEventListener('submit', onSubmit)
 
 function onDataForm(e) {
-    DataForm[e.target.name] = e.target.value;
-
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(DataForm));
+    dataForm[e.target.name] = e.target.value;
+    
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(dataForm));
 };
 
 function onDataPlaceholder() {
@@ -23,11 +23,13 @@ function onDataPlaceholder() {
         const dataStorage = JSON.parse(localStorage.getItem(STORAGE_KEY))
 
         if (dataStorage.message) {
-        textAreaEl.value = dataStorage.message;
+            textAreaEl.value = dataStorage.message;
+            dataForm.message = textAreaEl.value;
         }
 
         if (dataStorage.email) {
-        inputEmailEl.value = dataStorage.email;
+            inputEmailEl.value = dataStorage.email;
+            dataForm.email = inputEmailEl.value
         }
     // localStorage.removeItem("feedback-form-state")
     }
